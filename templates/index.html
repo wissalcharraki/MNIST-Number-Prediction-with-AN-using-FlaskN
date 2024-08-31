@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNIST Number Prediction with ANN</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto my-10">
+        <h1 class="text-4xl font-bold mb-5">MNIST Number Prediction with ANN</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <div class="mb-5">
+                <input type="file" name="file" id="file-input" value="Select an image" accept=".png, .jpg, .jpeg" class="w-full py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            </div>
+            <div class="container mx-auto p-4">
+                <div class="container mx-auto p-4 grid grid-cols-1 gap-4 items-center justify-center">
+                    <div class="w-1/4 bg-gray-300 bg-opacity-10 p-4 flex flex-col justify-between">
+                    <!-- Content for the top part of the div goes here -->
+                    <button type="button" onclick="predictNumber()" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-4">Predict Number</button>
+                
+                    <!-- Content for the bottom part of the div goes here -->
+                    <div id="prediction-result" class="p-4 bg-blue-500 text-white rounded-md">
+                        <p>Result</p><!-- Result content goes here -->
+                    </div>
+                    <div id="prediction-accuracy" class="mt-4 p-5 bg-green-500 text-white rounded-md">
+                        <p>Accuracy</p><!-- Result content goes here -->
+                    </div>
+                    <img id="image-preview" class="mt-5" src=""/>
+                    </div>
+                </div>
+            </div>
+              
+            
+            
+        </form>
+        
+    </div>
+    <script>
+        function predictNumber() {
+            const fileInput = document.getElementById('file-input');
+            const predictionResult = document.getElementById('prediction-result');
+            const formData = new FormData(document.getElementById('upload-form'));
+
+            const accuracy = document.getElementById('prediction-accuracy');
+            console.log("Sending prediction request...");
+    
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Prediction request failed with status: ${response.status}`);
+                }
+                console.log(response.body)
+                return response.json();
+            })
+            .then(data => {
+                console.log("Prediction request successful. Received data:", data);
+                predictionResult.innerHTML = `Predicted Number: ${data.prediction}`;
+                accuracy.innerHTML = ` Accuracy :${data.accuracy}`
+            })
+            .catch(error => {
+                console.error('Error during prediction request:', error);
+                predictionResult.innerHTML = 'Error predicting number. Please try again.';
+            });
+        }
+    </script>
+    <script>
+        const imageFile = document.querySelector('#file-input');
+        const imagePreview = document.querySelector('#image-preview');
+      
+        imageFile.addEventListener('change', () => {
+          const file = imageFile.files[0];
+          const reader = new FileReader();
+      
+          reader.onload = (event) => {
+            imagePreview.src = event.target.result;
+          };
+      
+          reader.readAsDataURL(file);
+        });
+      </script>
+    
+</body>
+</html>
