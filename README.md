@@ -30,3 +30,35 @@ To get started with this project, follow these steps:
    ```bash
    git clone https://github.com/wissalcharraki/flaskapp.git
    cd flaskapp
+ 2. Install the required Python packages:
+
+      ```bash
+      pip install -r requirements.txt
+3. Make sure you have the Keras model mnist_model_ann.h5 in your project directory.
+
+
+##Usage
+1. Start the Flask application:
+   
+   ```bash
+   python app.py
+2. Open your web browser and navigate to http://127.0.0.1:5000/.
+
+3. Use the interface to upload an image of a handwritten digit.
+
+4. Click the "Predict Number" button to see the prediction results and accuracy.
+
+##Contributing
+Contributions are welcome! If you have suggestions for improvements or want to report bugs, please create an issue or submit a pull request.
+
+##License
+This project is licensed under the MIT License. See the LICENSE file for more information.
+
+### Instructions:
+1. Copy the text above.
+2. Create a new file in your project directory named `README.md`.
+3. Paste the copied text into the `README.md` file.
+4. Save the file.
+
+This `README.md` provides clear, structured information about your project, making it easy for others to understand its purpose and how to use it. Feel free to modify any section to better fit your project's specifics!
+  
