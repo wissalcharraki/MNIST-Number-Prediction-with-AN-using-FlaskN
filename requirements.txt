@@ -1,0 +1,5 @@
+Flask==2.2.2
+tensorflow==2.16.2  # or the latest version available
+keras==2.12.0       # Keras is included in TensorFlow 2.16.0 and later
+Pillow==9.2.0
+numpy==1.23.4
